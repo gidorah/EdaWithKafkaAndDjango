@@ -33,8 +33,3 @@ def kafka_consume(topic):
         pass
     finally:
         consumer.close()
-
-
-if __name__ == "__main__":
-    sleep(10)
-    kafka_consume(topic="order-events")

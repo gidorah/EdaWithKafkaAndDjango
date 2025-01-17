@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "order",
+    "consumer",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -124,15 +127,22 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Celery settings
-CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
+
+# Debugpy settings
+DEBUG_PORT = int(os.getenv("REMOTE_DEBUGGING_PORT", 5679))
 
 if DEBUG:
-    import debugpy
+    print("Starting debugpy with port", DEBUG_PORT)
 
-    debugpy.listen(("0.0.0.0", 5678))
+    try:
+        import debugpy
 
-    print("Debugger is listening on port 5678")
+        debugpy.listen(("0.0.0.0", DEBUG_PORT))
+        print(f"Debugger is listening on port {DEBUG_PORT}")
+    except Exception as e:
+        print(f"debugpy not available: {e}")
