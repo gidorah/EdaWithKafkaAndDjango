@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "order",
     "consumer",
     "django_celery_beat",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -134,9 +135,10 @@ CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
 
 # Debugpy settings
-DEBUG_PORT = int(os.getenv("REMOTE_DEBUGGING_PORT", 5679))
+REMOTE_DEBUGGING_PORT = os.getenv("REMOTE_DEBUGGING_PORT")
 
-if DEBUG:
+if DEBUG and REMOTE_DEBUGGING_PORT:
+    DEBUG_PORT = int(REMOTE_DEBUGGING_PORT)
     print("Starting debugpy with port", DEBUG_PORT)
 
     try:

@@ -53,7 +53,6 @@ services:
   celery:
     build:
       context: .
-    container_name: celery
     command: celery -A consumer worker --loglevel=info
     depends_on:
       - django
@@ -61,8 +60,10 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - CELERY_WORKER_PREFETCH_MULTIPLIER=1
     volumes:
       - .:/app
+    restart: always
 
   celery-beat:
     build:
