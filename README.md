@@ -96,6 +96,35 @@ EdaWithKafkaAndDjango-main/
 - **API**:
   Endpoints for managing orders are available under the `order` app's views.
 
+## Remote Debugging
+
+You can use the following  vscode launch configurations for remote debugging in your IDE:
+
+```jsonc
+{
+   "version": "0.2.0",
+   "configurations": [
+      {
+            "name": "Main App",
+            "type": "python",
+            "request": "attach",
+            "host": "localhost",
+            "port": 5679,
+            "pathMappings": [
+               {
+                  "localRoot": "${workspaceFolder}",
+                  "remoteRoot": "/app"
+               }
+            ]
+      },
+   ]
+}
+```
+
+
+
+
+
 ## Important Files
 
 - `docker-compose.yml`: Defines services for Django, Kafka, and Celery.
