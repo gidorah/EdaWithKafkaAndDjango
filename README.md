@@ -96,6 +96,17 @@ EdaWithKafkaAndDjango-main/
 - **API**:
   Endpoints for managing orders are available under the `order` app's views.
 
+  You can send an order by making a request to the following URL:
+   ```
+   localhost:8000
+   ```
+
+  You can start consuming messages by making a request to the following URL:
+  ```
+  localhost:8000/run_consumer
+  ```
+
+
 ## Remote Debugging
 
 You can use the following  vscode launch configurations for remote debugging in your IDE:
